@@ -14,7 +14,7 @@ class Monomial {
         return fact;
     }
 
-	public Monomial(int numVar) { // create Monomial with a certain number of
+	public Monomial(int numVar) { // create Monomial with a certain number of variables
 		this.numVar = numVar;
 		degrees = new int[numVar];
 	}
@@ -32,12 +32,6 @@ class Monomial {
 		return degrees[index];
 	}
 	
-//	public boolean isIdentity(){
-//		for(int i =0; i<numVar; i++){
-//			if(degrees[i])
-//		}
-//	}
-
 	public int getNumVar(){
 		return numVar;
 	}
@@ -53,10 +47,9 @@ class Monomial {
 		}
 		return new Monomial(product);
 	}
-//	
+	
 	public Polynomial partialDerivative(Monomial monomial){
-//		System.err.println(this);
-		Map<Monomial, Integer> derivative = new HashMap<Monomial, Integer>(); //contains the monomial derivative and the coeeficient
+		Map<Monomial, Integer> derivative = new HashMap<Monomial, Integer>(); //contains the monomial derivative and the coefficient
 		int coefficient = 1; 
 		int[] copyDegrees = degrees.clone();						//maintain local copy for the derivative
 		for(int i = 0; i<monomial.getNumVar(); i++ ){
@@ -67,7 +60,6 @@ class Monomial {
 			}
 		}
 		derivative.put(new Monomial(copyDegrees), coefficient);
-//		System.err.println(new Polynomial(derivative));
 		return new Polynomial(derivative);
 	}
 
@@ -154,7 +146,6 @@ public class Polynomial {
 				sum.coefficients.put(terms, anotherPolynomial.coefficients.get(terms));
 			}
 		}
-//		System.err.println(sum);
 		return sum;
 	}
 	
@@ -203,7 +194,6 @@ public class Polynomial {
 		for(Monomial terms: coefficients.keySet()){
 			derivative = derivative.add(terms.partialDerivative(monomial));
 		}
-//		System.err.println(derivative);
 		return derivative;
 	}	
 
@@ -217,9 +207,6 @@ public class Polynomial {
 		}
 			out = out.substring(0, out.length() - 2);  // cut out extra + sign
 		}
-//		else{
-//			out = "1";
-//		}
 		return out;
 	}
 
@@ -227,16 +214,15 @@ public class Polynomial {
 	// test client
 	public static void main(String[] args) {
 
-//		Monomial id = new Monomial(new int[] {0 , 0, 0, 0});
 		Monomial y1 = new Monomial(new int[] { 1, 0, 0, 0 }); //y_1
-		Monomial y2 = new Monomial(new int[] { 0, 1, 0, 0 }); //xy
-		Monomial y3 = new Monomial(new int[] { 0, 0, 1, 0 }); //y^2
-		Monomial y4 = new Monomial(new int[] { 0, 0, 0, 1});
-		Polynomial p = new Polynomial(new Monomial[]{y1, y2}, new int[]{1, 1});
+		Monomial y2 = new Monomial(new int[] { 0, 1, 0, 0 }); //y_2
+		Monomial y3 = new Monomial(new int[] { 0, 0, 1, 0 }); //y_3
+		Monomial y4 = new Monomial(new int[] { 0, 0, 0, 1}); //y_4
+		Polynomial p = new Polynomial(new Monomial[]{y1, y2}, new int[]{1, 1}); //y_1 + y_2
 		Polynomial id = new Polynomial();
-		Polynomial q = new Polynomial(new Monomial[]{y1.multiplyBy(y1).multiplyBy(y2)}, new int[]{1});
+		Polynomial q = new Polynomial(new Monomial[]{y1.multiplyBy(y1).multiplyBy(y2)}, new int[]{1}); //y_1^2 * y_2
 		System.out.println(q.partialDerivative(new Polynomial(new Monomial[]{y1, y2}, new int[]{1, 1})));
-//		
+
 		Monomial[] y = new Monomial[4];
 		for(int i = 0; i<y.length; i++){					   //initialize the array of variables
 			int[] curMonomial = new int[y.length];
@@ -245,10 +231,6 @@ public class Polynomial {
 			}
 			y[i] = new Monomial(curMonomial);
 		}
-//		for(int i =0; i<y.length; i++){
-//			System.out.println(y[i].toString());
-//		}
-		// Monomial n = new Monomial(new int[] { 1, 2,0,1,2,1});
 
 		Polynomial w0 = new Polynomial(new Monomial[]{y[0], y[1]}, new int[]{1, -1}); 
 		for(int i =0; i<y.length; i++){
@@ -258,9 +240,6 @@ public class Polynomial {
 				}
 			}
 		}
-//
-//		System.out.println(w0.toString());
-//		
 	}
 
 }
